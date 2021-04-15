@@ -1,0 +1,6 @@
+PUT http://localhost:3000/api/tasks/4
+Content-Type: application/json
+
+{
+  "isDone":true
+}
