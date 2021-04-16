@@ -4,6 +4,7 @@ const Controller = require('./');
 
 class UserController extends Controller {
   static model = User;
+
   static getAllUsers = async (req, res, next) => {
     try {
       const users = await this.getAll();
@@ -17,6 +18,7 @@ class UserController extends Controller {
       next(error);
     }
   };
+  
   static createUser = async (req, res, next) => {
     try {
       const { body } = req;

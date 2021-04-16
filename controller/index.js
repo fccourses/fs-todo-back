@@ -27,4 +27,5 @@ class Controller {
     return this.model.findByPk(id);
   }
 }
+
 module.exports = Controller;

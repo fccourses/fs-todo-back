@@ -67,7 +67,7 @@ class TaskController extends Controller {
       if (count === 0) {
         return next(createHttpError(404, 'Task Not Found'));
       }
-      res.send({ data: count });
+      res.send({ data: taskId });
     } catch (error) {
       next(error);
     }
