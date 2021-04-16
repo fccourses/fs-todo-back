@@ -7,9 +7,12 @@ class TaskController extends Controller {
 
   static createTask = async (req, res, next) => {
     try {
-      const { body } = req;
+      const {
+        body,
+        params: { userId },
+      } = req;
 
-      const task = await this.create(body);
+      const task = await this.create({ ...body, userId });
 
       if (!task) {
         return next(createHttpError(400, 'Task can not be saved'));
@@ -23,7 +26,10 @@ class TaskController extends Controller {
 
   static getAllTasks = async (req, res, next) => {
     try {
-      const tasks = await this.getAll();
+      const {
+        params: { userId },
+      } = req;
+      const tasks = await this.getAll({ where: { userId } });
 
       if (!tasks) {
         return next(createHttpError(404, 'Tasks not found'));
@@ -39,10 +45,10 @@ class TaskController extends Controller {
     try {
       const {
         body,
-        params: { id },
+        params: { taskId },
       } = req;
-      
-      const updatedTask = await this.updateById(body, id);
+
+      const updatedTask = await this.updateById(body, taskId);
 
       res.send({ data: updatedTask });
     } catch (error) {
@@ -53,10 +59,10 @@ class TaskController extends Controller {
   static deleteTask = async (req, res, next) => {
     try {
       const {
-        params: { id },
+        params: { taskId },
       } = req;
 
-      const count = await this.deleteById(id);
+      const count = await this.deleteById(taskId);
 
       if (count === 0) {
         return next(createHttpError(404, 'Task Not Found'));
