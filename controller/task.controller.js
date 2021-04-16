@@ -28,8 +28,13 @@ class TaskController extends Controller {
     try {
       const {
         params: { userId },
+        pagination,
       } = req;
-      const tasks = await this.getAll({ where: { userId } });
+      const tasks = await this.getAll({
+        where: { userId },
+        ...pagination,
+        order: ['createdAt'],
+      });
 
       if (!tasks) {
         return next(createHttpError(404, 'Tasks not found'));
